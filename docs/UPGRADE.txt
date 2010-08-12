@@ -1,0 +1,12 @@
+UPGRADE ExtJS
+=============
+
+Site where you will find extjs:
+
+http://www.sencha.com/products/js
+
+* wget http://www.sencha.com/products/js/download.php?dl=extjs321
+* unzip extjs-XXX.zip
+* cp extjs-XXX/ resources/
+
+
