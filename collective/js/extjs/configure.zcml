@@ -1,0 +1,54 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser" 
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="collective.js.jqueryui">
+
+  <five:registerPackage package="." />
+
+  <genericsetup:registerProfile 
+      name="default" 
+      title="collective.js.extjs default profile" 
+      directory="profiles/default" 
+      description="ExtJS for Plone 4"
+      provides="Products.GenericSetup.interfaces.EXTENSION" 
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      />
+
+  <browser:resource
+      name="ext-jquery-adapter.js"
+      file="resources/adapter/jquery/ext-jquery-adapter.js"
+      />
+
+  <browser:resource
+      name="ext-all.js"
+      file="resources/ext-all.js"
+      />
+  <browser:resource
+      name="ext-all.css"
+      file="resources/resources/css/ext-all.css"
+      />
+
+  <browser:resourceDirectory
+      name="extjs"
+      directory="resources"
+      />
+
+  <browser:viewlet
+      name="ext-lang"
+      for="*"
+      manager="plone.app.layout.viewlets.interfaces.IHtmlHeadLinks"
+      class=".viewlet.ExtLang"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      name="example.extjs"
+      for="*"
+      class=".example.Example"
+      template="example.pt"
+      permission="zope2.View"
+      />
+
+</configure>
