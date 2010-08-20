@@ -1,4 +1,6 @@
 from plone.app.layout.viewlets.common import ViewletBase
+from Acquisition import aq_inner
+from zope.component import getMultiAdapter
 
 EXTJS_LANGUAGES = (
     'af', 'bg', 'ca', 'cs', 'da', 'de', 'el-GR', 'en-GB', 'en',
@@ -18,10 +20,16 @@ class ExtLang(ViewletBase):
 
     def js_lang_url(self):
         portal_url = self.context.portal_url()
-        return "%s/++resource++extjs/locales/ext-lang-%s.js"%(portal_url, self.js_lang())
+        return "%s/++resource++extjs/locale/ext-lang-%s.js"%(portal_url, self.js_lang())
 
     def js_lang(self):
-        language = self.request.LANGUAGE
+
+        context = aq_inner(self.context)
+        portal_state = getMultiAdapter((context, self.request), name=u'plone_portal_state')
+
+        language = portal_state.language()
+
+        #language = self.request.LANGUAGE
         if '-' in language:
             # normalize combined language code
             parts = language.split('-')
@@ -34,7 +42,5 @@ class ExtLang(ViewletBase):
                 language = language.split('-')[0]
         if language in EXTJS_LANGUAGES:
             return language
-        # Return empty string if the language is not supported
-        # by jqueryui so the default this.regional[''] of the datepicker
-        # plugin is used.
         return ''
+
